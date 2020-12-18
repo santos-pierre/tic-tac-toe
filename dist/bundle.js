@@ -1,0 +1,1 @@
+(()=>{"use strict";var t;!function(t){t.Cross="X",t.Circle="O"}(t||(t={}));const o=t;var n=new(function(){function t(t,o){this.name=t,this.form=o}return t.prototype.getName=function(){return this.name},t.prototype.getForm=function(){return this.form},t}())("jojo",o.Cross);console.log(n)})();
