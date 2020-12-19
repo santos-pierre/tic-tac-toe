@@ -1,6 +1,5 @@
-import PlayerShape from './enum/PlayerShape';
-import Player from './models/Player';
+import GameController from './Controllers/GameController';
 
-let player = new Player('jojo', PlayerShape.Cross);
+const app = new GameController(4);
 
-console.log(player);
+app.init();
