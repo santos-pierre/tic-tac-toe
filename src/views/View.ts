@@ -1,16 +1,34 @@
 import PlayerShape from '../enum/PlayerShape';
 import Game from '../models/Game';
+import Player from '../models/Player';
 import { walkDOM } from '../utils/utils';
 
 class View {
-    constructor() {}
+    private playerSelectedStyle;
+    private playerNotSelectedStyle;
+    constructor() {
+        this.playerSelectedStyle = 'bg-gray-100 rounded-lg shadow-xl shadow w-36 border-b-8 border-indigo-800'.split(
+            ' '
+        );
+        this.playerNotSelectedStyle = 'bg-gray-100 rounded-lg shadow-xl shadow w-36'.split(
+            ' '
+        );
+    }
 
     // Create an element with an optional CSS class
-    createElement(tag: string, className: Array<string>) {
+    createElement(tag: string, className: Array<string>, id: string = '') {
         const element = document.createElement(tag);
         if (className) element.classList.add(...className);
-
+        if (id) element.id = id;
         return element;
+    }
+
+    getPlayerNotSelectedStyle() {
+        return this.playerNotSelectedStyle;
+    }
+
+    getPlayerSelectedStyle() {
+        return this.playerSelectedStyle;
     }
 
     // Retrieve an element from the DOM
@@ -62,6 +80,36 @@ class View {
         boardGame.forEach((element) => {
             root?.appendChild(element);
         });
+
+        // Current Players
+
+        let players = this.getElement('#players');
+
+        let player1 = this.createElement(
+            'div',
+            this.getPlayerSelectedStyle(),
+            game.getPlayers()[0].getName()
+        );
+
+        // Cross
+        player1.innerHTML = `<div class="h-32 flex justify-center items-center">
+            <svg class="w-30 h-30" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+        </div>`;
+
+        let player2 = this.createElement(
+            'div',
+            this.getPlayerNotSelectedStyle(),
+            game.getPlayers()[1].getName()
+        );
+        // Circle
+        player2.innerHTML = `<div class="h-32 font-bold flex justify-center items-center">
+            <svg class="w-24 h-24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M10 .4A9.6 9.6 0 0 0 .4 10a9.6 9.6 0 1 0 19.2-.001C19.6 4.698 15.301.4 10 .4zm0 17.199A7.6 7.6 0 1 1 10 2.4a7.6 7.6 0 1 1 0 15.199z"/>
+            </svg>
+        </div>`;
+
+        players?.appendChild(player1);
+        players?.appendChild(player2);
     }
 
     refreshDOM(row: number, col: number, content: PlayerShape) {
@@ -73,9 +121,32 @@ class View {
                 if (coordinate.row === row && coordinate.col === col) {
                     let childDiv = el.firstElementChild;
                     if (childDiv) {
-                        childDiv.innerHTML = content;
+                        if (content === PlayerShape.Cross) {
+                            childDiv.innerHTML = `<div class="h-32 flex justify-center items-center">
+                                <svg class="w-30 h-30" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </div>`;
+                        } else if (content === PlayerShape.Circle) {
+                            childDiv.innerHTML = `<div class="h-32 font-bold flex justify-center items-center">
+                                <svg class="w-24 h-24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path d="M10 .4A9.6 9.6 0 0 0 .4 10a9.6 9.6 0 1 0 19.2-.001C19.6 4.698 15.301.4 10 .4zm0 17.199A7.6 7.6 0 1 1 10 2.4a7.6 7.6 0 1 1 0 15.199z"/>
+                                </svg>
+                            </div>`;
+                        }
                     }
                 }
+            }
+        });
+    }
+
+    refreshPlayers(players: Array<Player>) {
+        let root = document.querySelector('#players');
+        walkDOM(root, (el: Element) => {
+            if (el.id === players[0].getName()) {
+                el.classList.value = '';
+                el.classList.add(...this.getPlayerSelectedStyle());
+            } else if (el.id === players[1].getName()) {
+                el.classList.value = '';
+                el.classList.add(...this.getPlayerNotSelectedStyle());
             }
         });
     }

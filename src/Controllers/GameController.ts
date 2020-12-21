@@ -10,7 +10,6 @@ class GameController {
     constructor(size: number = 3) {
         this.game = new Game(size);
         this.view = new View();
-        console.log(this.game.getBoardGame());
     }
 
     init() {
@@ -39,6 +38,7 @@ class GameController {
             this.game.playerAction(
                 new Coordinates(selectedCell.getRow(), selectedCell.getCol())
             );
+            this.view.refreshPlayers(this.getGame().getPlayers());
         }
     }
 }
