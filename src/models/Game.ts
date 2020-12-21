@@ -288,7 +288,7 @@ class Game {
         // Check negative diagonal
         if (diagonalNegative.length === boardSize) {
             isOver =
-                diagonalPositive.filter(
+                diagonalNegative.filter(
                     (cell: Cell) => cell.getContent() === player.getForm()
                 ).length === boardSize;
             if (isOver) {

@@ -117,6 +117,22 @@ test('Game 3x3 draw', () => {
     expect(game.getWinner()).toBe(undefined);
 });
 
+test('Game 3x3 negative diagonal', () => {
+    let game = new Game(3);
+
+    game.playerAction(new Coordinates(0, 0)); //X
+    game.playerAction(new Coordinates(0, 2)); //O
+    game.playerAction(new Coordinates(1, 0)); //X
+    game.playerAction(new Coordinates(1, 1)); //O
+    game.playerAction(new Coordinates(0, 1)); //X
+    game.playerAction(new Coordinates(2, 0)); //O
+
+    expect(game.getGameStatus()).toEqual(GameStatus.END);
+    expect(game.getWinner()).toEqual(
+        new Player('Player 2', PlayerShape.Circle)
+    );
+});
+
 test('Game 4x4 Player 1 diagonal win', () => {
     let game = new Game(4);
 
