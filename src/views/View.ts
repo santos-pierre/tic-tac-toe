@@ -1,3 +1,4 @@
+import GameStatus from '../enum/GameStatus';
 import PlayerShape from '../enum/PlayerShape';
 import Game from '../models/Game';
 import Player from '../models/Player';
@@ -136,17 +137,33 @@ class View {
         });
     }
 
-    refreshPlayers(players: Array<Player>) {
+    refreshPlayers(game: Game) {
         let root = document.querySelector('#players');
-        walkDOM(root, (el: Element) => {
-            if (el.id === players[0].getName()) {
-                el.classList.value = '';
-                el.classList.add(...this.getPlayerSelectedStyle());
-            } else if (el.id === players[1].getName()) {
-                el.classList.value = '';
-                el.classList.add(...this.getPlayerNotSelectedStyle());
+        if (game.getGameStatus() === GameStatus.END && !game.getWinner()) {
+            //If ther is a draw remove Style from player 1 and player 2
+            let player1 = document.getElementById(
+                `${game.getPlayers()[0].getName()}`
+            );
+            let player2 = document.getElementById(
+                `${game.getPlayers()[1].getName()}`
+            );
+            if (player1 && player2) {
+                player1.classList.value = '';
+                player1.classList.add(...this.getPlayerNotSelectedStyle());
+                player2.classList.value = '';
+                player2.classList.add(...this.getPlayerNotSelectedStyle());
             }
-        });
+        } else {
+            walkDOM(root, (el: Element) => {
+                if (el.id === game.getPlayers()[0].getName()) {
+                    el.classList.value = '';
+                    el.classList.add(...this.getPlayerSelectedStyle());
+                } else if (el.id === game.getPlayers()[1].getName()) {
+                    el.classList.value = '';
+                    el.classList.add(...this.getPlayerNotSelectedStyle());
+                }
+            });
+        }
     }
 }
 

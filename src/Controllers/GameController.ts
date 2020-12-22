@@ -38,7 +38,7 @@ class GameController {
             this.game.playerAction(
                 new Coordinates(selectedCell.getRow(), selectedCell.getCol())
             );
-            this.view.refreshPlayers(this.getGame().getPlayers());
+            this.view.refreshPlayers(this.getGame());
         }
     }
 }
