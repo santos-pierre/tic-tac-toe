@@ -2,8 +2,11 @@ import GameController from './Controllers/GameController';
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-let size = urlParams.get('size');
+let size = Number(urlParams.get('size'));
 
-if (size) {
-    new GameController(eval(size)).init();
+if (size > 2 && size < 6) {
+    new GameController(size).init();
+} else {
+    location.href = location.href.replace(`?size=${size}`, `?size=${3}`);
+    new GameController().init();
 }
