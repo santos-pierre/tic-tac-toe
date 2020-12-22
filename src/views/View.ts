@@ -7,12 +7,10 @@ class View {
     private playerSelectedStyle;
     private playerNotSelectedStyle;
     constructor() {
-        this.playerSelectedStyle = 'bg-gray-100 rounded-lg shadow-xl shadow w-36 border-b-8 border-indigo-800'.split(
+        this.playerSelectedStyle = 'rounded-lg shadow-xl shadow w-36 border-b-8 border-indigo-800'.split(
             ' '
         );
-        this.playerNotSelectedStyle = 'bg-gray-100 rounded-lg shadow-xl shadow w-36'.split(
-            ' '
-        );
+        this.playerNotSelectedStyle = 'rounded-lg w-36'.split(' ');
     }
 
     // Create an element with an optional CSS class

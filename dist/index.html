@@ -25,9 +25,7 @@
                 </div>
                 <!-- Size Select -->
                 <div x-data="inputSelect()">
-                    <div
-                        x-show.transition.out.duration.1000ms="!game"
-                        >
+                    <div>
                         <div class="mt-1 relative">
                             <button
                                 x-on:click="isOpen =! isOpen"
@@ -79,7 +77,7 @@
                                         role="option"
                                         class=" cursor-pointer select-none relative py-2 pl-3 pr-9 hover:text-white hover:bg-indigo-600"
                                         :class="{'text-white bg-indigo-600': selected === option, 'text-gray-900': selected !== option }"
-                                        x-on:click="selected = option; isOpen = false"
+                                        x-on:click="setUrl(option)"
                                     >
                                             <span
                                                 class="block truncate"
@@ -92,7 +90,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="flex justify-center w-full mt-5">
+                        <a class="flex justify-center w-full mt-5" x-bind:href="url" target="_blanck">
                             <button
                                 id="playButton"
                                 type="button"
@@ -100,29 +98,26 @@
                                 class="inline-flex w-full justify-center items-center px-3 py-2 border border-transparent text-sm leading-4 font-bold rounded-md shadow-sm text-white bg-indigo-600"
                                 :class="{'bg-opacity-50 cursor-not-allowed' : !selected,'hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500' : selected }"
                                 x-bind:data-value="selected ? selected.value: 0"
-                                x-on:click="game = true"
                                 >
                                 Play
                             </button>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </main>
-            <div class="flex-col space-y-3">
-                <div id="root"></div>
-                <div id="players" class="flex space-x-3 justify-center">
-                </div>
-            </div>
         </div>
-        <div id="modal"></div>
-        <script src="./bundle.js"></script>
         <script>
             function inputSelect() {
                 return {
-                    game: false,
                     isOpen: false,
                     options: [{value: 3}, {value:4}, {value:5}],
-                    selected: null
+                    selected: null,
+                    url: "#",
+                    setUrl(element){
+                        this.selected = element;
+                        this.isOpen= false;
+                        this.url = `./game.html?size=${this.selected.value}`
+                    }
                 }
             }
         </script>
