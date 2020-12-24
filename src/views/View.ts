@@ -1,17 +1,18 @@
 import GameStatus from '../enum/GameStatus';
 import PlayerShape from '../enum/PlayerShape';
 import Game from '../models/Game';
-import Player from '../models/Player';
 import { walkDOM } from '../utils/utils';
 
 class View {
     private playerSelectedStyle;
     private playerNotSelectedStyle;
     constructor() {
-        this.playerSelectedStyle = 'rounded-lg shadow-xl shadow w-36 border-b-8 border-indigo-800'.split(
+        this.playerSelectedStyle = 'rounded-lg shadow-xl shadow w-36 border-b-8 border-indigo-800 dark:bg-gray-700'.split(
             ' '
         );
-        this.playerNotSelectedStyle = 'rounded-lg w-36'.split(' ');
+        this.playerNotSelectedStyle = 'rounded-lg w-36 border-b-8 border-transparent'.split(
+            ' '
+        );
     }
 
     // Create an element with an optional CSS class
@@ -53,6 +54,7 @@ class View {
                 row.map((cell) => {
                     let wrapper = this.createElement('div', [
                         'bg-gray-100',
+                        'dark:bg-gray-700',
                         'rounded-lg',
                         'shadow-xl',
                         'w-36',
