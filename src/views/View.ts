@@ -41,7 +41,22 @@ class View {
     init(game: Game, callback: Function) {
         let boardGame: Array<HTMLElement> = [];
         let root = this.getElement('#root');
-        let classList = [
+        let classList = [];
+        switch (game.getBoardGame().getSize()) {
+            case 3:
+                classList = ['grid', `grid-cols-3`, `gap-3`];
+                break;
+            case 4:
+                classList = ['grid', `grid-cols-4`, `gap-4`];
+                break;
+            case 5:
+                classList = ['grid', `grid-cols-5`, `gap-5`];
+                break;
+            default:
+                classList = ['grid', `grid-cols-3`, `gap-3`];
+                break;
+        }
+        classList = [
             'grid',
             `grid-cols-${game.getBoardGame().getSize()}`,
             `gap-${game.getBoardGame().getSize()}`,
