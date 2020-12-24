@@ -12,6 +12,7 @@
   },
   "scripts": {
     "start": "webpack serve",
+    "dev:css": "npx tailwindcss-cli@latest build ./src/assets/css/tailwind.css -o ./dist/css/tailwind.css",
     "build": "webpack",
     "test": "jest",
     "build:css": "NODE_ENV=production npx tailwindcss-cli@latest build ./src/assets/css/tailwind.css -o ./dist/css/tailwind.css"

@@ -5,20 +5,52 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Tic Tac Toe</title>
         <link
-            href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+            href="./css/tailwind.css"
             rel="stylesheet"
         />
         <link rel="icon" href="./icons/logo.svg" />
+        <script>
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.querySelector('html').classList.add('dark')
+              } else {
+                document.querySelector('html').classList.remove('dark')
+              }
+        </script>
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     </head>
-    <body >
+    <body class="dark:bg-gray-800 bg-gray-100 dark:text-gray-50 text-gray-800">
         <!-- Tic Tac Toe Logo -->
-        <img src="./icons/logo.svg" class="h-16 fixed top-2 left-2" alt="" srcset="">
-        <div class="h-screen flex justify-around items-center md:flex-row flex-col">
+        <svg class="h-16 fixed top-2 left-2" viewBox="0 0 123 123" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.7678 46.2322C11.7915 45.2559 10.2085 45.2559 9.23223 46.2322C8.25592 47.2085 8.25592 48.7915 9.23223 49.7678L20.2437 60.7793L9.23223 71.7908C8.25592 72.7671 8.25592 74.35 9.23223 75.3263C10.2085 76.3026 11.7915 76.3026 12.7678 75.3263L23.7793 64.3148L34.7907 75.3263C35.7671 76.3026 37.35 76.3026 38.3263 75.3263C39.3026 74.35 39.3026 72.7671 38.3263 71.7907L27.3148 60.7793L38.3263 49.7678C39.3026 48.7915 39.3026 47.2086 38.3263 46.2322C37.35 45.2559 35.7671 45.2559 34.7907 46.2322L23.7793 57.2437L12.7678 46.2322Z" fill="currentColor"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M53.2678 6.73223C52.2915 5.75592 50.7085 5.75592 49.7322 6.73223C48.7559 7.70854 48.7559 9.29146 49.7322 10.2678L60.7437 21.2793L49.7322 32.2908C48.7559 33.2671 48.7559 34.85 49.7322 35.8263C50.7085 36.8026 52.2915 36.8026 53.2678 35.8263L64.2793 24.8148L75.2907 35.8263C76.2671 36.8026 77.85 36.8026 78.8263 35.8263C79.8026 34.85 79.8026 33.2671 78.8263 32.2907L67.8148 21.2793L78.8263 10.2678C79.8026 9.29147 79.8026 7.70855 78.8263 6.73224C77.85 5.75593 76.2671 5.75593 75.2907 6.73224L64.2793 17.7437L53.2678 6.73223Z" fill="currentColor"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 36C32.2843 36 39 29.2843 39 21C39 12.7157 32.2843 6 24 6C15.7157 6 9 12.7157 9 21C9 29.2843 15.7157 36 24 36ZM23.9999 33.7273C31.029 33.7273 36.7271 28.0291 36.7271 21C36.7271 13.9709 31.029 8.27273 23.9999 8.27273C16.9708 8.27273 11.2726 13.9709 11.2726 21C11.2726 28.0291 16.9708 33.7273 23.9999 33.7273Z" fill="currentColor"/>
+            <line x1="4.5" y1="40.5" x2="82.5" y2="40.5" stroke="currentColor" stroke-linecap="round"/>
+            <line x1="42.5063" y1="80.4938" x2="43.4938" y2="1.49371" stroke="currentColor" stroke-linecap="round"/>
+            <line x1="83.5" y1="39.5" x2="83.5" y2="1.5" stroke="currentColor" stroke-linecap="round"/>
+            <line x1="4.5" y1="80.5" x2="42.5" y2="80.5" stroke="currentColor" stroke-linecap="round"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M73.0034 50.0016C70.4958 48.1169 67.3782 47 63.9998 47C55.7155 47 48.9998 53.7157 48.9998 62C48.9998 65.3597 50.1043 68.4615 51.9701 70.9619L53.5688 69.2944C52.1216 67.2288 51.2724 64.7136 51.2724 62C51.2724 54.9709 56.9706 49.2727 63.9996 49.2727C66.73 49.2727 69.2595 50.1325 71.3322 51.596L73.0034 50.0016Z" fill="currentColor"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M114.004 9.00162C111.496 7.11691 108.378 6 105 6C96.7157 6 90 12.7157 90 21C90 24.3597 91.1046 27.4615 92.9704 29.9619L94.569 28.2944C93.1218 26.2288 92.2726 23.7136 92.2726 21C92.2726 13.9709 97.9708 8.27273 105 8.27273C107.73 8.27273 110.26 9.13248 112.332 10.596L114.004 9.00162Z" fill="currentColor"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M34.0034 90.0016C31.4958 88.1169 28.3782 87 24.9998 87C16.7155 87 9.99976 93.7157 9.99976 102C9.99976 105.36 11.1043 108.461 12.9701 110.962L14.5688 109.294C13.1216 107.229 12.2724 104.714 12.2724 102C12.2724 94.9709 17.9706 89.2727 24.9996 89.2727C27.73 89.2727 30.2595 90.1325 32.3322 91.596L34.0034 90.0016Z" fill="currentColor"/>
+            <line x1="0.79094" y1="121.795" x2="121.795" y2="0.790837" stroke-width="2" stroke="currentColor"/>
+        </svg>
+        <!-- Tic Tac Toe End Logo -->
+        <div class="fixed top-5 right-5" x-data="theme()" x-init="init()">
+            <button x-show="mode === 'light'" @click="toggleTheme('dark')" class="focus:outline-none focus:ring focus:ring-gray-200 focus:text-gray-200 rounded-md p-2">
+                <svg class="h-10 w-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+            </button>
+            <button x-show="mode === 'dark'" @click="toggleTheme('light')" class="focus:outline-none focus:ring focus:ring-yellow-200 focus:text-yellow-200 rounded-md p-2">
+                <svg class="h-10 w-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+            </button>
+        </div>
+        <div class="h-screen flex justify-around items-center md:flex-row flex-col ">
             <main class="max-w-7xl px-4 space-y-3">
                 <div class="text-center">
                     <h1
-                        class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl"
+                        class="text-4xl tracking-tight font-extrabold sm:text-5xl md:text-6xl"
                     >
                         <span class="block xl:inline">Tic Tac Toe</span>
                     </h1>
@@ -33,7 +65,7 @@
                                 aria-haspopup="listbox"
                                 aria-expanded="true"
                                 aria-labelledby="listbox-label"
-                                class="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                class="relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             >
                                 <span class="block truncate" x-text="selected ? selected.value :'Select the size'"> </span>
                                 <span
@@ -60,7 +92,7 @@
                                 x-transition:leave="transition ease-in duration-100"
                                 x-transition:leave-start="opacity-100"
                                 x-transition:leave-end="opacity-0"
-                                class="absolute mt-1 w-full rounded-md bg-white shadow-lg"
+                                class="absolute mt-1 w-full rounded-md bg-white dark:bg-gray-800 shadow-lg"
                             >
                                 <ul
                                     x-on:click.away="isOpen = false"
@@ -76,7 +108,7 @@
                                         :key="option.value"
                                         role="option"
                                         class=" cursor-pointer select-none relative py-2 pl-3 pr-9 hover:text-white hover:bg-indigo-600"
-                                        :class="{'text-white bg-indigo-600': selected === option, 'text-gray-900': selected !== option }"
+                                        :class="{'text-white bg-indigo-600': selected === option, 'text-gray-900 dark:text-white': selected !== option }"
                                         x-on:click="setUrl(option)"
                                     >
                                             <span
@@ -107,6 +139,28 @@
             </main>
         </div>
         <script>
+            function theme() {
+                return {
+                    mode: null ,
+                    toggleTheme(mode){
+                        this.mode = mode;
+                        localStorage.theme = mode;
+                        if(this.mode === 'light'){
+                            document.querySelector('html').classList.remove('dark')
+                        }else{
+                            document.querySelector('html').classList.add('dark')
+
+                        }
+                    },
+                    init(){
+                        if(localStorage.theme){
+                            this.mode = localStorage.theme
+                        }else{
+                            this.mode = 'light'
+                        }
+                    }
+                }
+            }
             function inputSelect() {
                 return {
                     isOpen: false,
