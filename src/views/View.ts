@@ -83,6 +83,7 @@ class View {
                         'justify-center',
                     ]);
                     wrapper.addEventListener('click', function (event) {
+												if((event.currentTarget as HTMLElement).querySelector('svg')) return;
                         let data = this.getAttribute('data-coordinates');
                         if (data) {
                             let coordinate = eval(data);
